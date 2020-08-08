@@ -1,0 +1,30 @@
+version: '3'
+networks: 
+    api_network:
+volumes:
+    mongo_data:
+    # https://docs.docker.com/storage/volumes/
+services:
+    db:
+    # https://hub.docker.com/_/mongo
+        container_name: mongodb
+        image: mongo:4.4.0-bionic
+        volumes: 
+            - mongo_data:/data/db
+        restart: always
+        
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: T5r4e3t1ps9
+        ports:
+            - "4000:27017"
+
+        networks: 
+          -  api_network
+
+    api:
+    # https://docs.docker.com/engine/examples/dotnetcore/
+        build: Api
+        container_name: api.net
+        ports: 
+            - "8080:80"

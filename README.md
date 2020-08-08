@@ -2,6 +2,9 @@
 
 Fork de um curso da Digital innovation one, lecionado pelo Gabriel Faradai, para criação de uma API dotnet com MongoDB.
 
+# To do:
+  - Adicionar os Id's.
+  
 Para teste:
 
 https://localhost:5001/infectado
