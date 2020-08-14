@@ -17,7 +17,7 @@ Um primeiro json para você:
 }
 ```
 ## OBS: 
-### Rode o docker-compose para subir um mongo standalone ( eu te desencorajo a fazer uma instalação do mongo standalone para produção, faremos aqui somente para estudo ), e descomente o serviço app, caso queira subir a api em um container, mas sem debug ( a menos que você configure ), e na porta 80 ( então, deve ser trocar na string de conexão. )
+### Rode o docker-compose para subir um mongo standalone ( eu te desencorajo a fazer uma instalação do mongo standalone para produção, faremos aqui somente para estudo ), e descomente o serviço app, caso queira subir a api em um container, mas sem debug ( a menos que você configure ), e na porta 80 ( então, deve-se trocar na string de conexão. )
 
 ## Links Uteis:
 
