@@ -1,7 +1,9 @@
 ﻿using Api.Data.Collections;
+using Api.Controllers;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System;
 
 namespace Api.Controllers
 {
@@ -12,9 +14,9 @@ namespace Api.Controllers
     public class InfectadoController : ControllerBase
     {
         // Declaramos um mongo pra gente.
-        Data.MongoDB _mongoDB;
+        private Data.MongoDB _mongoDB;
         // Declaramos uma coleção do mongo pra gente também.
-        IMongoCollection<Infectado> _infectadosCollection;
+        private IMongoCollection<Infectado> _infectadosCollection;
 
         // E na instancia desse Controller, recebemos por injeção de dependencia, uma instancia do mongo ( no Startup.cs ).
         public InfectadoController(Data.MongoDB mongoDB)
@@ -25,10 +27,27 @@ namespace Api.Controllers
             _infectadosCollection = _mongoDB.DB.GetCollection<Infectado>(typeof(Infectado).Name.ToLower());
         }
 
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            var infectados = _infectadosCollection.Find(Builders<Infectado>.Filter.Empty).ToList();
+            
+            return Ok(infectados);
+        }
+        
+        [HttpGet("{id:length(24)}")]
+        public ActionResult GetById(string id)
+        {
+            var infectados = _infectadosCollection.Find(Builders<Infectado>.Filter.Empty).FirstOrDefault();
+            
+            return Ok(infectados);
+        }
+
+
         // Daqui pra baixo é REST
         [HttpPost]
         // Vai receber um objeto com a estrutura daquela DTO
-        public ActionResult SalvarInfectado([FromBody] InfectadoDto dto)
+        public ActionResult Post([FromBody] InfectadoDto dto)
         {
             // Instanciamos o que será o documento.
             var infectado = new Infectado(dto.DataNascimento, dto.Sexo, dto.Latitude, dto.Longitude);
@@ -40,18 +59,10 @@ namespace Api.Controllers
             // Feito muleque. 
             // Se você gosta de gatos, e quiser saber mais sobre esse tipo de retorno: https://http.cat/201
         }
-
-        [HttpGet]
-        public ActionResult ObterInfectados()
-        {
-            var infectados = _infectadosCollection.Find(Builders<Infectado>.Filter.Empty).ToList();
-            
-            return Ok(infectados);
-        }
         
         [HttpPut]
         // Vai receber um objeto com a estrutura daquela DTO
-        public ActionResult AtualizarInfectado([FromBody] InfectadoDto dto)
+        public ActionResult Update([FromBody] InfectadoDto dto)
         {        
             // Editamos, filtrando por Data.
             _infectadosCollection.UpdateOne(Builders<Infectado>.Filter.Where(_ => _.DataNascimento == dto.DataNascimento), Builders<Infectado>.Update.Set("sexo",dto.Sexo));
@@ -60,13 +71,13 @@ namespace Api.Controllers
             // Feito também
         }
 
-        [HttpDelete("{dataNasc}")]
+        [HttpDelete("{id:length(24)}")]
         // Vai receber um objeto com a estrutura daquela DTO
-        public ActionResult DeleteInfectado(dataNasc)
+        public ActionResult Delete(string id)
         {        
             // Vamos procurar por data por enquanto.
-            _infectadosCollection.DeleteOne(Builders<Infectado>.Filter.Where(_ => _.DataNascimento == dto.dataNasc);
-            return Ok("Atualizado com Sucesso");
+            _infectadosCollection.DeleteOne(Builders<Infectado>.Filter.Where(_ => _.Id == id));
+            return Ok("Deletado com Sucesso");
             // Feito também
         }
     }

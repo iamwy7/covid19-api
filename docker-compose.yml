@@ -17,14 +17,14 @@ services:
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: T5r4e3t1ps9
         ports:
-            - "4000:27017"
+            - "5003:27017"
 
         networks: 
           -  api_network
 
-    api:
-    # https://docs.docker.com/engine/examples/dotnetcore/
-        build: Api
-        container_name: api.net
-        ports: 
-            - "8080:80"
+    # api:
+    # # https://docs.docker.com/engine/examples/dotnetcore/
+    #     build: Api
+    #     container_name: api.net
+    #     ports: 
+    #         - "8080:80"
