@@ -17,11 +17,12 @@ https://localhost:5001/infectado
 	"longitude": -46.6565712
 }
 ```
-OBS: é preciso ter configurar o acesso ao banco no appsettings.
+OBS: Rode o docker-compose para subir o banco.
 
 Links Uteis:
 
 - postman - https://www.postman.com/downloads/
+- docker - https://docs.docker.com/
 
 
 -----------------------------------------------
